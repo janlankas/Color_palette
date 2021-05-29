@@ -43,17 +43,18 @@ svg {
   flex-direction: column;
   position: absolute;
   bottom: 0%;
-  background: white;
+  background: rgb(255, 255, 255);
   padding: 1rem;
-  width: 800;
-  opacity: 0;
+  width: 80%;
+  /* opacity: 0; */
   border-top-right-radius: 1rem;
   border-top-left-radius: 1rem;
+  /* pointer-events: none; */
   /* ADJUSTMENT class */
-  transform: translateY(100px);
+  /* transform: translateY(100px); */
   transition: all 0.5s ease-in-out;
 }
-.slider.active {
+.sliders.active {
   opacity: 1;
   transform: translateY(0px);
   pointer-events: all;
@@ -113,4 +114,13 @@ svg {
   background: none;
   cursor: pointer;
   margin: 2rem 0;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  margin: 1rem 0rem;
+  width: 100%;
+  position: relative;
+  border-radius: 1rem;
+  cursor: pointer;
 }
