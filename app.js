@@ -5,6 +5,9 @@ const generateBtn = document.querySelector('.generate');
 const sliders = document.querySelectorAll('input[type="range"]');
 const currentHex = document.querySelectorAll('.color h2');
 const popup = document.querySelector('.copy-container');
+const adjustButton = document.querySelectorAll('.adjust');
+const closeAdjustments = document.querySelectorAll('.close-adjustment');
+const slidersContainer = document.querySelectorAll('.sliders');
 let initialColors;
 
 
@@ -27,6 +30,19 @@ popup.addEventListener('transitionend', () => {
     const popupBox = popup.children[0];
     popup.classList.remove('active');
     popupBox.classList.remove('active');
+});
+
+adjustButton.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        openAdjustmentPanel(index);
+    })
+
+});
+
+closeAdjustments.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        closeAdjustmentPanel(index);
+    })
 })
 //Functions
 // Color generator
@@ -153,5 +169,14 @@ function copyToClickBoard(hex) {
     const popupBox = popup.children[0];
     popup.classList.add('active');
     popupBox.classList.add('active');
+}
+
+
+function openAdjustmentPanel(index) {
+    slidersContainer[index].classList.toggle('active');
+}
+
+function closeAdjustmentPanel(index) {
+    slidersContainer[index].classList.remove('active');
 }
 randomColors();
