@@ -6,12 +6,15 @@ const sliders = document.querySelectorAll('input[type="range"]');
 const currentHex = document.querySelectorAll('.color h2');
 const popup = document.querySelector('.copy-container');
 const adjustButton = document.querySelectorAll('.adjust');
+const lockButton = document.querySelectorAll('.lock');
 const closeAdjustments = document.querySelectorAll('.close-adjustment');
 const slidersContainer = document.querySelectorAll('.sliders');
 let initialColors;
 
 
 // Add our event listeners 
+generateBtn.addEventListener('click', randomColors);
+
 sliders.forEach(slider => {
     slider.addEventListener('input', hslControls);
 });
@@ -43,8 +46,20 @@ closeAdjustments.forEach((button, index) => {
     button.addEventListener('click', () => {
         closeAdjustmentPanel(index);
     })
+});
+
+lockButton.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        lockFeature(index);
+    })
 })
 //Functions
+
+function lockFeature(index) {
+    colorDivs[index].classList.toggle('locked');
+    lockButton[index].children[0].classList.toggle('fa-lock-open');
+    lockButton[index].children[0].classList.toggle('fa-lock');
+}
 // Color generator
 function generateHex() {
     const hexColor = chroma.random();
@@ -60,7 +75,13 @@ function randomColors() {
         const hexText = div.children[0];
         const randomColor = generateHex();
         //Add it to the array 
-        initialColors.push(chroma(randomColor).hex());
+        if (div.classList.contains('locked')) {
+            initialColors.push(hexText.innerText);
+            return;
+        } else {
+            initialColors.push(chroma(randomColor).hex());
+        }
+
         // Add the color to the bg
         div.style.backgroundColor = randomColor;
         hexText.innerText = randomColor;
@@ -78,6 +99,11 @@ function randomColors() {
     });
     //Reset Inputs
     resetInputs();
+    //Check for button contrast
+    adjustButton.forEach((button, index) => {
+        checkTextContrast(initialColors[index], button);
+        checkTextContrast(initialColors[index], lockButton[index]);
+    })
 
 }
 
