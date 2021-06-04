@@ -10,6 +10,10 @@ const lockButton = document.querySelectorAll('.lock');
 const closeAdjustments = document.querySelectorAll('.close-adjustment');
 const slidersContainer = document.querySelectorAll('.sliders');
 let initialColors;
+// local storage
+let savedPalettes = [];
+
+
 
 
 // Add our event listeners 
@@ -205,4 +209,59 @@ function openAdjustmentPanel(index) {
 function closeAdjustmentPanel(index) {
     slidersContainer[index].classList.remove('active');
 }
+
+// Implement save to palette and LOCAL STORAGE STUFF
+const saveBtn = document.querySelector('.save');
+const submitSave = document.querySelector('.submit-save');
+const closeSave = document.querySelector('.close-save');
+const saveContainer = document.querySelector('.save-container');
+const saveInput = document.querySelector('.save-container input');
+
+// Event listener 
+saveBtn.addEventListener('click', openPalette);
+closeSave.addEventListener('click', closePalette);
+submitSave.addEventListener('click', savePalette);
+
+function openPalette(e) {
+    const popup = saveContainer.children[0];
+    saveContainer.classList.add('active');
+    popup.classList.add('active');
+
+}
+
+function closePalette(e) {
+    const popup = saveContainer.children[0];
+    saveContainer.classList.remove('active');
+    popup.classList.remove('active');
+}
+
+function savePalette(e) {
+    saveContainer.classList.remove('active');
+    popup.classList.remove('active');
+    const name = saveInput.value;
+    const colors = [];
+    currentHex.forEach(hex => {
+        colors.push(hex.innerText);
+    });
+    // Generate Object 
+    let paletteNr = savedPalettes.length;
+    const paletteObj = { name, colors, nr: paletteNr };
+    savedPalettes.push(paletteObj);
+    //save to local storage
+    savetoLocal(paletteObj);
+    saveInput.value = "";
+}
+
+function savetoLocal(paletteObj) {
+    let localPalette;
+    if (localStorage.getItem('palettes') === null) {
+        localPalette = [];
+    } else {
+        localPalette = JSON.parse(localStorage.getItem('palettes'));
+    }
+    localPalette.push(paletteObj);
+    localStorage.setItem('palettes', JSON.stringify(localPalette));
+}
 randomColors();
+
+console.log(submitSave);
