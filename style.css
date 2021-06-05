@@ -156,6 +156,7 @@ input[type="range"] {
   transform: translateY(-2rem);
   min-width: 30%;
   min-height: 30vh;
+  padding: 2.5rem;
 }
 
 .copy-popup h4,
@@ -169,6 +170,7 @@ input[type="range"] {
 .save-container.active,
 .library-container.active {
   opacity: 1;
+  padding: 2.5rem;
   pointer-events: all;
 }
 
